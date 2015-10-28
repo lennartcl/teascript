@@ -1,4 +1,4 @@
-
+var CONTROL_INPUT = "::";
 
 module.exports.packStrings = function(input, output, options) {
     return packLines(
@@ -30,7 +30,7 @@ function packLines(input, output, options) {
         results.push(quoteLine(input[i], output[i]));
     }
     for (var i = input.length; i < output.length; i++) {
-        results.push("/*:$HIDE$*/" + output[i]);
+        results.push("/*:" + CONTROL_INPUT + "*/" + output[i]);
     }
     return results;
 }
@@ -92,7 +92,7 @@ function debug(args) {
 function quoteLine(input, output) {
     output = output || "";
     return input
-        ? "/*:" + input + "*/" + output
+        ? "/*:" + CONTROL_INPUT + input + "*/" + output
         : output;
 }
 

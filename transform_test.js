@@ -43,14 +43,14 @@ describe("Transform", function(){
         assertPack(
             "foo\nDELME",
             "foo",
-            "foo\n/*:DELME*/"
+            "foo\n/*:::DELME*/"
         );
     });
     it("copes with extra lines in output", function() {
         assertPack(
             "foo",
             "foo\nEXTRA",
-            "foo\n/*:$HIDE$*/EXTRA"
+            "foo\n/*:::*/EXTRA"
         );
     });
     it("doesn't touch unchanged lines", function() {
@@ -58,6 +58,13 @@ describe("Transform", function(){
             "foo\nbar",
             "foo\nbar",
             "foo\nbar"
+        );
+    });
+    it("handles expanded lines in output", function() {
+        assertPack(
+            "these are\nlegendary\ntimes",
+            "these are\nlegen-dary\ntimes",
+            "these are\n/*:::legendary*/legen-dary\ntimes"
         );
     });
 });
