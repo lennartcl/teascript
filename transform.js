@@ -76,9 +76,10 @@ function debug(args) {
 }
 
 function quoteLine(input, output) {
-    return output
-        ? "/*::" + output + "*/" + input
-        : input;
+    output = output || "";
+    return input
+        ? "/*:" + input + "*/" + output
+        : output;
 }
 
 function quotePart(part) {

@@ -46,6 +46,13 @@ describe("Transform", function(){
             "foo\n/*:DELME*/"
         );
     });
+    it("copes with extra lines in output", function() {
+        assertPack(
+            "foo",
+            "foo\nEXTRA",
+            "foo\nEXTRA"
+        );
+    });
     it("doesn't touch unchanged lines", function() {
         assertPack(
             "foo\nbar",
