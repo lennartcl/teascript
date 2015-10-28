@@ -50,7 +50,7 @@ describe("Transform", function(){
         assertPack(
             "foo",
             "foo\nEXTRA",
-            "foo\nEXTRA"
+            "foo\n/*:$HIDE$*/EXTRA"
         );
     });
     it("doesn't touch unchanged lines", function() {

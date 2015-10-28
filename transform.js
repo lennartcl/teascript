@@ -9,25 +9,39 @@ module.exports.packStrings = function(input, output, options) {
 };
 
 function packLines(input, output, options) {
+    var results = [];
     for (var i = 0; i < input.length; i++) {
-        if (input[i] === output[i])
+        if (input[i] === output[i]) {
+            results.push(input[i]);
             continue;
-        output[i] = packLineParts(input[i], output[i], options);
+        }
+        if (output[i] == null) {
+            results.push(quoteLine(input[i], null));
+            continue;
+        }
+            
+        var packed = packLineParts(input[i], output[i], options);
+        if (packed) {
+            results[i] = packed;
+            continue;
+        }
+        
+        // TODO: input and output too different, continue on different input line?
+        results.push(quoteLine(input[i], output[i]));
     }
-    return output.filter(function(line) {
-        return line != null;
-    });
+    for (var i = input.length; i < output.length; i++) {
+        results.push("/*:$HIDE$*/" + output[i]);
+    }
+    return results;
 }
 
 function packLineParts(input, output, options) {
     options = options || {};
     
-    if (!output)
-        return quoteLine(input, output);
-    if (!input)
-        return null;
-    
-    var result = packOpenPart(input, output, "", 0, 0) || quoteLine(output);
+    var result = packOpenPart(input, output, "", 0, 0);
+    if (!result)
+        return;
+    // TODO: optimize - strip spaces early on
     if (options.stripSpaces)
         result = result.replace(/\*\/ \/\*:/g, " ");
     return result;
