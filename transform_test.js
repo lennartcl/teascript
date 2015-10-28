@@ -32,18 +32,25 @@ describe("Transform", function(){
             "foo /*:DELME */bar/*: METOO*/"
         );
     });
-    it.skip("handles added lines", function() {
-        assertPack(
-            "foo\nbar",
-            "foo",
-            "foo\n/*::bar*/"
-        );
-    });
     it("should transform types stripped as spaces", function() {
         assertPack(
             "function foo(a: string, b: number): void {",
             "function foo(a        , b        )       {",
             "function foo(a/*:: string*/, b/*:: number*/)/*:: void*/ {"
+        );
+    });
+    it("handles extra lines in input", function() {
+        assertPack(
+            "foo\nDELME",
+            "foo",
+            "foo\n/*:DELME*/"
+        );
+    });
+    it("doesn't touch unchanged lines", function() {
+        assertPack(
+            "foo\nbar",
+            "foo\nbar",
+            "foo\nbar"
         );
     });
 });
