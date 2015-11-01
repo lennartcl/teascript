@@ -74,11 +74,25 @@ describe("Transform", function(){
             "foo\n/*:::\\/*DELME*\\/*/"
         );
     });
+    it("handles comments with backslashes in input", function() {
+        assertPack(
+            "foo\n/*DELME\\*/",
+            "foo",
+            "foo\n/*:::\\/*DELME\\\\*\\/*/"
+        );
+    });
     it("handles added lines in output (lousily)", function() {
         assertPack(
             "1\n2\n3",
             "1\n2\n2.5\n3",
             "1\n2\n/*:::3*/2.5\n/*:::*/3"
+        );
+    });
+    it("handles expanded empty lines", function() {
+        assertPack(
+            "1\n\n3",
+            "1\n2\n3",
+            "1\n/*:::\\n*/2\n3"
         );
     });
 });

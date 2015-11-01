@@ -8,6 +8,13 @@ module.exports.packStrings = function(input, output, options) {
     ).join("\n");
 };
 
+module.exports.unpackStrings = function(packed, options) {
+    return unpackLines(
+        packed.split(/\r\n|\n|\r/),
+        options
+    ).join("\n");
+};
+
 function packLines(input, output, options) {
     var results = [];
     for (var i = 0; i < input.length; i++) {
@@ -30,7 +37,7 @@ function packLines(input, output, options) {
         results.push(quoteLine(input[i], output[i]));
     }
     for (var i = input.length; i < output.length; i++) {
-        results.push(quoteLine("", output[i]));
+        results.push(quoteLine(null, output[i]));
     }
     return results;
 }
@@ -86,12 +93,30 @@ function packLineParts(input, output, options) {
 }
 
 function unpackLines(packed, options) {
+    var results = [];
+    var CONTROL_PREFIX = "/*:" + CONTROL_INPUT;
     for (var i = 0; i < packed.length; i++) {
         var line = packed[i];
-        if (line.indexOf("/*:" + CONTROL_INPUT) === 0) {
-            
+        
+        if (line.indexOf(CONTROL_PREFIX) === 0) {
+            var end = line.indexOf("*/");
+            if (end === CONTROL_PREFIX.length)
+                continue;
+            var part = packed[i].substring(CONTROL_PREFIX.length, end);
+            results.push(unquotePart(part));
+            continue;
         }
+        
+        var startQuote;
+        while ((startQuote = line.indexOf("/*:")) > -1) {
+            var endQuote = line.indexOf("*/", startQuote + 3);
+            line = line.substr(0, startQuote)
+                + unquotePart(line.substring(startQuote + 3, endQuote))
+                + line.substr(endQuote + 2);
+        }
+        results.push(line);
     }
+    return results;
 }
 
 function debug(args) {
@@ -100,13 +125,21 @@ function debug(args) {
 
 function quoteLine(input, output) {
     output = output || "";
-    return input != null
-        ? quotePart(CONTROL_INPUT + input) + output
-        : output;
+    if (input === "")
+        return "/*:" + CONTROL_INPUT + "\\n" + "*/" + output;
+    if (!input)
+        return "/*:" + CONTROL_INPUT + "*/" + output;
+    return quotePart(CONTROL_INPUT + input) + output;
 }
 
 function quotePart(part) {
     return part
         ? "/*:" + part.replace(/\\/g, "\\\\").replace(/\//g, "\\/") + "*/"
         : "";
+}
+
+function unquotePart(part) {
+    return part.replace(/^\\n$/, "")
+        .replace(/\\\\/g, "\\")
+        .replace(/\\\//g, "/");
 }
