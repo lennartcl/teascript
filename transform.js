@@ -30,7 +30,7 @@ function packLines(input, output, options) {
         results.push(quoteLine(input[i], output[i]));
     }
     for (var i = input.length; i < output.length; i++) {
-        results.push("/*:" + CONTROL_INPUT + "*/" + output[i]);
+        results.push(quoteLine("", output[i]));
     }
     return results;
 }
@@ -85,19 +85,28 @@ function packLineParts(input, output, options) {
     }
 }
 
+function unpackLines(packed, options) {
+    for (var i = 0; i < packed.length; i++) {
+        var line = packed[i];
+        if (line.indexOf("/*:" + CONTROL_INPUT) === 0) {
+            
+        }
+    }
+}
+
 function debug(args) {
     // console.log.apply(console, arguments);
 }
 
 function quoteLine(input, output) {
     output = output || "";
-    return input
-        ? "/*:" + CONTROL_INPUT + input + "*/" + output
+    return input != null
+        ? quotePart(CONTROL_INPUT + input) + output
         : output;
 }
 
 function quotePart(part) {
     return part
-        ? "/*:" + part + "*/"
+        ? "/*:" + part.replace(/\\/g, "\\\\").replace(/\//g, "\\/") + "*/"
         : "";
 }
