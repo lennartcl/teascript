@@ -8,35 +8,35 @@ describe("Transform", function(){
         assertPack(
             "foobar",
             "foo   ",
-            "foo/*:bar*/"
+            "foo/*+bar*/"
         );
     });
     it("handles base case 2", function() {
         assertPack(
             "foobar",
             "foo",
-            "foo/*:bar*/"
+            "foo/*+bar*/"
         );
     });
     it("handles base case 3", function() {
         assertPack(
             "foo DELME bar",
             "foo bar",
-            "foo /*:DELME */bar"
+            "foo /*+DELME */bar"
         );
     });
     it("handles base case 4", function() {
         assertPack(
             "foo DELME bar METOO",
             "foo bar",
-            "foo /*:DELME */bar/*: METOO*/"
+            "foo /*+DELME */bar/*+ METOO*/"
         );
     });
     it("should transform types stripped as spaces", function() {
         assertPack(
             "function foo(a: string, b: number): void {",
             "function foo(a        , b        )       {",
-            "function foo(a/*:: string*/, b/*:: number*/)/*:: void*/ {"
+            "function foo(a/*: string*/, b/*: number*/)/*: void*/ {"
         );
     });
     it("handles extra lines in input", function() {

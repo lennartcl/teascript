@@ -1,4 +1,6 @@
-var CONTROL_INPUT = "::";
+var CONTROL_OVERRIDE = ":::";
+var CONTROL_TYPE = ":";
+var CONTROL_PART = "+";
 
 module.exports.packStrings = function(input, output, options) {
     return packLines(
@@ -50,7 +52,7 @@ function packLineParts(input, output, options) {
         return;
     // TODO: optimize - strip spaces early on
     if (options.stripSpaces)
-        result = result.replace(/\*\/ \/\*:/g, " ");
+        result = result.replace(/\*\/ \/\*[:\+]/g, " ");
     return result;
     
     function packOpenPart(input, output, inputStart, outputStart) {
@@ -94,7 +96,7 @@ function packLineParts(input, output, options) {
 
 function unpackLines(packed, options) {
     var results = [];
-    var CONTROL_PREFIX = "/*:" + CONTROL_INPUT;
+    var CONTROL_PREFIX = "/*" + CONTROL_OVERRIDE;
     for (var i = 0; i < packed.length; i++) {
         var line = packed[i];
         
@@ -108,10 +110,16 @@ function unpackLines(packed, options) {
         }
         
         var startQuote;
-        while ((startQuote = line.indexOf("/*:")) > -1) {
+        while ((startQuote = line.indexOf("/*" + CONTROL_PART)) > -1) {
             var endQuote = line.indexOf("*/", startQuote + 3);
             line = line.substr(0, startQuote)
                 + unquotePart(line.substring(startQuote + 3, endQuote))
+                + line.substr(endQuote + 2);
+        }
+        while ((startQuote = line.indexOf("/*" + CONTROL_TYPE)) > -1) {
+            var endQuote = line.indexOf("*/", startQuote + 3);
+            line = line.substr(0, startQuote )
+                + unquotePart(line.substring(startQuote + 2, endQuote))
                 + line.substr(endQuote + 2);
         }
         results.push(line);
@@ -126,16 +134,27 @@ function debug(args) {
 function quoteLine(input, output) {
     output = output || "";
     if (input === "")
-        return "/*:" + CONTROL_INPUT + "\\n" + "*/" + output;
+        return "/*" + CONTROL_OVERRIDE + "\\n" + "*/" + output;
     if (!input)
-        return "/*:" + CONTROL_INPUT + "*/" + output;
-    return quotePart(CONTROL_INPUT + input) + output;
+        return "/*" + CONTROL_OVERRIDE + "*/" + output;
+    return quotePart(input, CONTROL_OVERRIDE) + output;
 }
 
-function quotePart(part) {
-    return part
-        ? "/*:" + part.replace(/\\/g, "\\\\").replace(/\//g, "\\/") + "*/"
-        : "";
+function quotePart(part, controlCode) {
+    if (!part)
+        return "";
+    if (!controlCode && part[0] === CONTROL_TYPE) {
+        part = part.substr(1);
+        controlCode = CONTROL_TYPE;
+    }
+    if (!controlCode) {
+        controlCode = CONTROL_PART;
+    }
+    
+    return "/*"
+        + controlCode
+        + part.replace(/\\/g, "\\\\").replace(/\//g, "\\/")
+        + "*/";
 }
 
 function unquotePart(part) {

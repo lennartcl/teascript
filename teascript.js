@@ -31,7 +31,7 @@ if (args.decompile) {
 else if (args.compile) {
     var compiled = jstransform.transform(file, {
         stripTypes: true,
-        es6: true
+        es6: false
     });
     result = transform.packStrings(file, compiled.code, { stripSpaces: true });
 }
