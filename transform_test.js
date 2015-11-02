@@ -43,14 +43,14 @@ describe("Transform", function(){
         assertPack(
             "foo\nDELME",
             "foo",
-            "foo\n/*:::DELME*/"
+            "foo\n/*++DELME*/"
         );
     });
     it("copes with extra lines in output", function() {
         assertPack(
             "foo",
             "foo\nEXTRA",
-            "foo\n/*:::*/EXTRA"
+            "foo\n/*++*/EXTRA"
         );
     });
     it("doesn't touch unchanged lines", function() {
@@ -64,35 +64,63 @@ describe("Transform", function(){
         assertPack(
             "these are\nlegendary\ntimes",
             "these are\nlegen-dary\ntimes",
-            "these are\n/*:::legendary*/legen-dary\ntimes"
+            "these are\n/*++legendary*/legen-dary\ntimes"
         );
     });
     it("handles comments in input", function() {
         assertPack(
             "foo\n/*DELME*/",
             "foo",
-            "foo\n/*:::\\/*DELME*\\/*/"
+            "foo\n/*++\\/*DELME*\\/*/"
         );
     });
     it("handles comments with backslashes in input", function() {
         assertPack(
             "foo\n/*DELME\\*/",
             "foo",
-            "foo\n/*:::\\/*DELME\\\\*\\/*/"
+            "foo\n/*++\\/*DELME\\\\*\\/*/"
         );
     });
     it("handles added lines in output (lousily)", function() {
         assertPack(
             "1\n2\n3",
             "1\n2\n2.5\n3",
-            "1\n2\n/*:::3*/2.5\n/*:::*/3"
+            "1\n2\n/*++3*/2.5\n/*++*/3"
         );
     });
     it("handles expanded empty lines", function() {
         assertPack(
             "1\n\n3",
             "1\n2\n3",
-            "1\n/*:::\\n*/2\n3"
+            "1\n/*++\\n*/2\n3"
+        );
+    });
+    it("handles /*: in input", function() {
+        assertPack(
+            "/*:foo*/",
+            "/*:foo*/",
+            "/*++\\/*:foo*\\/*//*:foo*/"
+        );
+    });
+    it("handles /*+ in input", function() {
+        assertPack(
+            "/*+foo*/",
+            "/*+foo*/",
+            "/*++\\/*\\+foo*\\/*//*+foo*/"
+        );
+    });
+    it("handles /*++ in input", function() {
+        assertPack(
+            "/*++foo*/",
+            "/*++foo*/",
+            "/*++\\/*\\+\\+foo*\\/*//*++foo*/"
+        );
+    });
+    it("handles + in input", function() {
+        assertPack(
+            "+3",
+            "3",
+            "/*+\\+*/3"
         );
     });
 });

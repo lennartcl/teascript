@@ -1,4 +1,4 @@
-var CONTROL_OVERRIDE = ":::";
+var CONTROL_OVERRIDE = "++";
 var CONTROL_TYPE = ":";
 var CONTROL_PART = "+";
 
@@ -20,12 +20,15 @@ module.exports.unpackString = function(packed, options) {
 function packLines(input, output, options) {
     var results = [];
     for (var i = 0; i < input.length; i++) {
-        if (input[i] === output[i]) {
-            results.push(input[i]);
+        if (output[i] == null
+            || output[i].indexOf("/*" + CONTROL_TYPE) > -1
+            || output[i].indexOf("/*" + CONTROL_PART) > -1
+            || output[i].indexOf("/*" + CONTROL_OVERRIDE) > -1) {
+            results.push(quoteLine(input[i], output[i]));
             continue;
         }
-        if (output[i] == null) {
-            results.push(quoteLine(input[i], null));
+        if (input[i] === output[i]) {
+            results.push(input[i]);
             continue;
         }
             
@@ -153,12 +156,15 @@ function quotePart(part, controlCode) {
     
     return "/*"
         + controlCode
-        + part.replace(/\\/g, "\\\\").replace(/\//g, "\\/")
+        + part.replace(/\\/g, "\\\\")
+              .replace(/\+/g, "\\+")
+              .replace(/\//g, "\\/")
         + "*/";
 }
 
 function unquotePart(part) {
     return part.replace(/^\\n$/, "")
-        .replace(/\\\\/g, "\\")
-        .replace(/\\\//g, "/");
+               .replace(/\\\\/g, "\\")
+               .replace(/\\\+/g, "+")
+               .replace(/\\\//g, "/");
 }
