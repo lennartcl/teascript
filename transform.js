@@ -8,7 +8,7 @@ module.exports.packStrings = function(input, output, options) {
     ).join("\n");
 };
 
-module.exports.unpackStrings = function(packed, options) {
+module.exports.unpackString = function(packed, options) {
     return unpackLines(
         packed.split(/\r\n|\n|\r/),
         options

@@ -10,6 +10,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "assert-diff": "^1.0.1",
-    "jstransform": "^11.0.3"
+    "jstransform": "^11.0.3",
+    "optimist": "^0.6.1"
   }
 }

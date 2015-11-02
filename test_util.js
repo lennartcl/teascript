@@ -5,7 +5,7 @@ var jstransform = require("jstransform/simple");
 var assertPack = module.exports.assertPack = function(input, output, expected) {
     var packed = transform.packStrings(input, output, { stripSpaces: true });
     assert.equal(packed, expected, "bad pack");
-    var unpacked = transform.unpackStrings(packed);
+    var unpacked = transform.unpackString(packed);
     assert.equal(input, unpacked, "bad unpack");
 };
 
