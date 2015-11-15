@@ -1,16 +1,19 @@
 {
-  "name": "transformer",
+  "name": "teascript",
   "version": "1.0.0",
   "description": "",
-  "main": "transform.js",
+  "main": "teascript.js",
   "scripts": {
     "test": "mocha transform_test.js"
   },
   "author": "Lennart Kats <lennart@c9.io>",
   "license": "UNLICENSED",
   "dependencies": {
-    "assert-diff": "^1.0.1",
-    "jstransform": "^11.0.3",
-    "optimist": "^0.6.1"
+    "jstransform": "~11.0.3",
+    "optimist": "~0.6.1"
+  },
+  "devdependencies": {
+    "assert-diff": "~1.0.1",
+    "mocha": "^2.3.3",
   }
 }
