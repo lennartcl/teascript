@@ -4,12 +4,12 @@
   "description": "",
   "author": "Lennart Kats <lennart@c9.io>",
   "license": "UNLICENSED",
-  "main": "transform.js",
+  "main": "lib/transform.js",
   "bin": {
-    "teascript": "./teascript.js"
+    "teascript": "bin/teascript.js"
   },
   "scripts": {
-    "test": "mocha transform_test.js"
+    "test": "mocha test"
   },
   "dependencies": {
     "jstransform": "~11.0.3",

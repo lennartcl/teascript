@@ -2,7 +2,7 @@
 var optimist = require("optimist");
 var fs = require("fs");
 var jstransform = require("jstransform/simple");
-var transform = require("./transform");
+var transform = require("../lib/transform");
 
 var args = optimist
     .usage('Compile or decompile teascript files\nUsage: teascript.js <-c FILE [OPTIONS...]|-d FILE>')

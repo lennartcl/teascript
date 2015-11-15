@@ -22,6 +22,9 @@ function repeat(s /*: string*/, n /*: number*/) /*: void*/ {
 
 TeaScript simply turns all JavaScript extensions into annotations
 in comments, and can translate it back to the original form on the fly.
+This way, editors always see the extended version and can provide
+better code completion and what not. And build tools, debuggers,
+packagers, etc. still work since they see pure JavaScript.
 
 ## Command-line Use
 

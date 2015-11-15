@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*global describe it*/
 
-var assertPack = require("./test_util").assertPack;
+var assertPack = require("../lib/test_util").assertPack;
 
 describe("Transform", function(){
     it("handles base case 1", function() {
