@@ -2,12 +2,15 @@
   "name": "teascript",
   "version": "1.0.0",
   "description": "",
-  "main": "teascript.js",
+  "author": "Lennart Kats <lennart@c9.io>",
+  "license": "UNLICENSED",
+  "main": "transform.js",
+  "bin": {
+    "teascript": "./teascript.js"
+  },
   "scripts": {
     "test": "mocha transform_test.js"
   },
-  "author": "Lennart Kats <lennart@c9.io>",
-  "license": "UNLICENSED",
   "dependencies": {
     "jstransform": "~11.0.3",
     "optimist": "~0.6.1"
