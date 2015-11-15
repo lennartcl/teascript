@@ -9,7 +9,8 @@
     "teascript": "bin/teascript.js"
   },
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test",
+    "browserify": "node_modules/browserify/bin/cmd.js lib/teascript.js | node_modules/uglify-js/bin/uglifyjs -m -c -o teascript.js"
   },
   "dependencies": {
     "jstransform": "~11.0.3",
@@ -18,6 +19,7 @@
   "devdependencies": {
     "assert-diff": "~1.0.1",
     "mocha": "^2.3.3",
-    "browserify": "^12.0.1"
+    "browserify": "^12.0.1",
+    "uglify-js": "^2.6.0"
   }
 }
