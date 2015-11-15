@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 var optimist = require("optimist");
 var fs = require("fs");
-var jstransform = require("jstransform/simple");
-var transform = require("../lib/transform");
+var teascript = require("../lib/teascript");
 
 var args = optimist
     .usage('Compile or decompile teascript files\nUsage: teascript.js <-c FILE [OPTIONS...]|-d FILE>')
@@ -69,16 +68,6 @@ var source = args.compile || args.decompile;
 if (source === true)
     source = "/dev/stdin";
 var file = fs.readFileSync(source, "utf8");
-var result;
-
-if (args.decompile) {
-    result = transform.unpackString(file);
-}
-else if (args.compile) {
-    if (args.stripTypes === undefined)
-        args.stripTypes = true;
-    var compiled = jstransform.transform(file, args);
-    result = transform.packStrings(file, compiled.code, { stripSpaces: true });
-}
+var result = args.decompile ? teascript.decompile(file) : teascript.compile(file, args);
 
 console.log(result);

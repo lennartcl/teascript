@@ -4,7 +4,7 @@
   "description": "",
   "author": "Lennart Kats <lennart@c9.io>",
   "license": "UNLICENSED",
-  "main": "lib/transform.js",
+  "main": "lib/teascript.js",
   "bin": {
     "teascript": "bin/teascript.js"
   },
