@@ -55,7 +55,7 @@ into legal ES5 code with annotations in comments:
     
 /**+getFoo() {*/Object.defineProperty(Foo.prototype,"getFoo",{writable:true,configurable:true,value:function() {"use strict";
         return foo;
-    }
+/**+}*/}});
 /*+}*/
 ```
 
