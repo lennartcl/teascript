@@ -21,7 +21,7 @@ function repeat(s /*: string*/, n /*: number*/) /*: void*/ {
 }
 ```
 
-Got some ES6 got with classes?
+Got some ES6 with classes?
 
 ```javascript
 class Foo {
