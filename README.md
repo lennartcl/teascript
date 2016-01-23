@@ -1,10 +1,11 @@
 # TeaScript
 
-TeaScript adds type annotations, ES2015, React, and what not, to JavaScript.
-Instead of relying on a compilation step, TeaScript is designed to be integrated
-into an editor, always saving plain old JavaScript to disk.
+TeaScript is an experimental transformation tool that adds type annotations,
+ES2015, React, and what not, to JavaScript. Instead of relying on a compilation
+step, TeaScript is designed to be integrated into an editor, always saving plain
+old JavaScript to disk.
 
-For example, when your editor shows
+For example, when your editor shows JavaScript with type annotations
 
 ```javascript
 function repeat(s : string, n : number) : void {
@@ -12,12 +13,42 @@ function repeat(s : string, n : number) : void {
 }
 ```
 
-on disk it will actually look like
+on disk it will actually look like:
 
 ```javascript
 function repeat(s /*: string*/, n /*: number*/) /*: void*/ {
     return // ...
 }
+```
+
+Got some ES6 got with classes?
+
+```javascript
+class Foo {
+    constructor(foo, bar) {
+        this.foo = foo;
+        this.bar = bar;
+    }
+    
+    getFoo() {
+        return foo;
+    }
+}
+```
+
+on disk TeaScript can store it as legal ES5 code with annotations:
+ 
+```
+/*+class Foo {*/
+/*++    constructor(foo, bar) {*/    function Foo(foo, bar) {"use strict";
+        this.foo = foo;
+        this.bar = bar;
+    }
+    
+/*++    getFoo() {*/    Object.defineProperty(Foo.prototype,"getFoo",{writable:true,configurable:true,value:function() {"use strict";
+        return foo;
+    }
+/*+}*/
 ```
 
 TeaScript simply turns all JavaScript extensions into annotations
