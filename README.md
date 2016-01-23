@@ -38,7 +38,7 @@ class Foo {
 
 on disk TeaScript can store it as legal ES5 code with annotations:
  
-```
+```javascript
 /*+class Foo {*/
 /**+constructor(foo, bar) {*/function Foo(foo, bar) {"use strict";
         this.foo = foo;
