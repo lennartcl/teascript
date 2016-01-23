@@ -65,6 +65,12 @@ Output plain JavaScript for a file:
 teascript -c simple.js
 ```
 
+Output ES5 for an ES6 file:
+
+```
+teascript -c --es6 simple.js
+```
+
 Restore extended JavaScript from stdin:
 
 ```
