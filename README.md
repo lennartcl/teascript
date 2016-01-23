@@ -40,12 +40,12 @@ on disk TeaScript can store it as legal ES5 code with annotations:
  
 ```
 /*+class Foo {*/
-/*++    constructor(foo, bar) {*/    function Foo(foo, bar) {"use strict";
+/**+constructor(foo, bar) {*/    function Foo(foo, bar) {"use strict";
         this.foo = foo;
         this.bar = bar;
     }
     
-/*++    getFoo() {*/    Object.defineProperty(Foo.prototype,"getFoo",{writable:true,configurable:true,value:function() {"use strict";
+/**+getFoo() {*/    Object.defineProperty(Foo.prototype,"getFoo",{writable:true,configurable:true,value:function() {"use strict";
         return foo;
     }
 /*+}*/
