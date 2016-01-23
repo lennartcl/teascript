@@ -21,7 +21,15 @@ function repeat(s /*: string*/, n /*: number*/) /*: void*/ {
 }
 ```
 
-Got some ES6 with classes?
+TeaScript simply turns all JavaScript extensions into annotations
+in comments, and can translate it back to the original form on the fly.
+This way, editors always see the extended version and can provide
+better code completion and what not. And build tools, debuggers,
+packagers, etc. still work since they see pure JavaScript.
+
+TeaScript can be used for small transformations like getting rid of type
+annotations, but in principle can be used together with any transformation.
+For example, `teascript -c --es6` can compile ES6 with classes
 
 ```javascript
 class Foo {
@@ -36,7 +44,7 @@ class Foo {
 }
 ```
 
-on disk TeaScript can store it as legal ES5 code with annotations:
+into legal ES5 code with annotations in comments:
  
 ```javascript
 /*+class Foo {*/
@@ -50,12 +58,6 @@ on disk TeaScript can store it as legal ES5 code with annotations:
     }
 /*+}*/
 ```
-
-TeaScript simply turns all JavaScript extensions into annotations
-in comments, and can translate it back to the original form on the fly.
-This way, editors always see the extended version and can provide
-better code completion and what not. And build tools, debuggers,
-packagers, etc. still work since they see pure JavaScript.
 
 ## Command-line Use
 
