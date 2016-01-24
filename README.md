@@ -1,9 +1,10 @@
 # TeaScript
 
 TeaScript is an experimental transformation tool that adds type annotations,
-ES2015, React, and what not, to JavaScript. Instead of relying on a compilation
-step, TeaScript is designed to be integrated into an editor, always saving plain
-old JavaScript to disk.
+ES2015, React, and what not, to JavaScript. It can be integrated into an editor,
+saving plain old JavaScript with annotations to disk. This makes it so that it
+doesn't need a special compile step and toolchain setup, and plays nicely with
+other tools such as debuggers.
 
 For example, when your editor shows JavaScript with type annotations
 
