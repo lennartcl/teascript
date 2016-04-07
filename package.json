@@ -1,6 +1,6 @@
 {
   "name": "teascript",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "",
   "author": "Lennart Kats <lennart@c9.io>",
   "license": "UNLICENSED",
@@ -15,6 +15,10 @@
   "dependencies": {
     "jstransform": "~11.0.3",
     "optimist": "~0.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lennartcl/teascript.git"
   },
   "devDependencies": {
     "assert-diff": "~1.0.1",
